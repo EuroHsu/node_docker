@@ -15,20 +15,28 @@ cp docker-compose.yml.example docker-compose.yml
 
 docker-compose.yml
 
+可以把`mydata`資料夾換成自己的`NodeJS`專案資料夾，例如`myproject`
+
+指定`working_dir`到專案路徑，例如`/myproject`
+
+開放專案需要的`port`，例如`8080`
+
+將`command`修改成專案啟動指令，例如`npm start`
+
 ```yml
 version: '3.2'
 services:
   node:
     image: node:10.16.3
+    working_dir: /myproject
+    ports:
+      - "8080:8080"
     volumes:
-      - "./mydata:/mydata"
+      - "./myproject:/myproject"
     command:
-      - "tail"
-      - "-f"
-      - "/dev/null"
+      - "npm"
+      - "start"
 ```
-
-`mydata`資料夾中可以放一些要在`NodeJS`底下執行的檔案或專案
 
 ### 啟動`NodeJS`
 
@@ -74,10 +82,4 @@ node -v
 
 ```bash
 npm -v
-```
-
-5. 執行掛載在`mydata`資料夾下的`JS`檔案
-
-```bash
-node /mydata/檔名.js
 ```
